@@ -2,19 +2,20 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Project1
+namespace BoxBattle
 {
-    public class Game1 : Game
+    public class BoxBattle : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Rectangle Player;
+        private Rectangle Player1;
+        private Rectangle Player2;
 
         public Texture2D Texture;
 
         private const int speed = 5;
 
-        public Game1()
+        public BoxBattle()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -40,7 +41,8 @@ namespace Project1
                 Texture.SetData<Color>(new Color[] { Color.White });
             }
 
-            Player = new Rectangle(10, 150, 20, 20);
+            Player1 = new Rectangle(50, 150, 20, 20);
+            Player2 = new Rectangle(730, 150, 20, 20);
         }
 
         protected override void Update(GameTime gameTime)
@@ -48,21 +50,38 @@ namespace Project1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Up))
+            if (GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                Player.Y -= speed;
+                Player1.Y -= speed;
             }
-            if (GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Down))   
+            if (GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.S))   
             {
-                Player.Y += speed;
+                Player1.Y += speed;
             }
-            if (GamePad.GetState(PlayerIndex.One).DPad.Right == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (GamePad.GetState(PlayerIndex.One).DPad.Right == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                Player.X += speed;
+                Player1.X += speed;
             }
-            if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                Player.X -= speed;
+                Player1.X -= speed;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                Player2.Y -= speed;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                Player2.Y += speed;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                Player2.X += speed;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                Player2.X -= speed;
             }
 
             base.Update(gameTime);
@@ -76,7 +95,8 @@ namespace Project1
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
-            DrawRectangle(_spriteBatch, Player, Color.White);
+            DrawRectangle(_spriteBatch, Player1, Color.White);
+            DrawRectangle(_spriteBatch, Player2, Color.Black);
 
             _spriteBatch.End();
 
