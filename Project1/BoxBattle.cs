@@ -84,6 +84,8 @@ namespace BoxBattle
                 Player2.X -= speed;
             }
 
+
+
             base.Update(gameTime);
         }
 
